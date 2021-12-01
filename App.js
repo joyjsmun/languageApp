@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 
 const Container = styled.View`
@@ -14,9 +14,18 @@ const Box = styled.TouchableOpacity`
 
 export default function App() {
   const [y, setY] = useState(0);
+  const [intervalId, setintervalID] = useState(null);
   const moveUp = () => {
-    setInterval(() => setY((prev) => prev + 20), 500);
+    const id = setInterval(() => setY((prev) => prev + 1), 1);
+    setintervalID(id);
   };
+  useEffect(() => {
+    if (y === 200) {
+      clearInterval(intervalId);
+    }
+  }, [y, intervalId]);
+
+  console.log("rendering");
   return (
     <Container>
       <Box
